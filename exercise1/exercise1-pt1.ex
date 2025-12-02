@@ -1,5 +1,4 @@
 {:ok, contents} = File.read("puzzle1input.txt")
-_startPoint = 50
 filterContents = contents |> String.split("\n", trim: true)
 chunks = [{"C", "50"} | Enum.map(filterContents, fn x -> String.split_at(x, 1) end)]
 abc = Enum.map_reduce(chunks, 0, fn x, acc -> remain = rem(String.to_integer(elem(x,1)), 100)
@@ -16,6 +15,5 @@ abc = Enum.map_reduce(chunks, 0, fn x, acc -> remain = rem(String.to_integer(ele
 						end
 						end
 					end)
-IO.inspect(abc)
 password = Enum.count(elem(abc,0), fn x -> x == 0 end)
 IO.inspect(password)
