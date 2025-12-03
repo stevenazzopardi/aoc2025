@@ -1,0 +1,16 @@
+{:ok, contents} = File.read("puzzle3input.txt")
+filterContents = Enum.map(String.split(contents, "\n", trim: true), fn x -> Integer.digits(String.to_integer(x)) end)
+filter = Enum.map(filterContents, fn x -> Enum.take(x, length(x)-1) end)
+IO.inspect(filterContents)
+IO.inspect(filter)
+filter2 = Enum.map(filterContents, fn x -> 
+				   filterLast = Enum.take(x, length(x)-1)
+				   max = Enum.max(filterLast) 
+				   index = Enum.find_index(x, fn y -> y == max end)
+				   IO.inspect(index)
+				   lastNum = Enum.max(Enum.slice(x, index+1..length(x)))
+				   {max, lastNum}
+				   end)
+final = Enum.map(filter2, fn x -> Enum.join(Tuple.to_list(x)) end)
+final2 = Enum.sum(Enum.map(final, fn x -> String.to_integer(x) end))
+IO.inspect(final2)
