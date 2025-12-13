@@ -1,0 +1,6 @@
+{:ok, contents} = File.read("puzzleinput6.txt")
+filterContents = String.split(contents, "\n", trim: true)
+lines = Enum.map(filterContents, fn x -> String.split(x, " ", trim: true) end)
+zipped = Enum.zip(lines) |> Enum.map(fn x -> {Enum.map(Tuple.to_list(Tuple.delete_at(x, tuple_size(x)-1)), fn x -> String.to_integer(x) end), elem(x,tuple_size(x)-1)} end) 
+calc = Enum.map(zipped, fn x -> Enum.reduce(elem(x,0), fn y, acc -> if elem(x,1) == "*" do y * acc else y + acc end end) end) |> Enum.reduce(fn y , acc -> y + acc end)
+IO.inspect(calc)
